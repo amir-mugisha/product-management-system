@@ -8,6 +8,9 @@ The system is designed to manage products
 efficiently, offering functionalities such 
 as product creation, update, deletion, and retrieval.
 
+## Loom video
+[Link to video](https://www.loom.com/share/e2485f45ffb8430a84065305e44149cb?sid=cbbfaac9-77a0-4634-86f4-5a753dcc1960)
+
 ## System Requirements
 
 - Java JDK 11 or higher
