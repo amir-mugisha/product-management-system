@@ -7,6 +7,9 @@ import org.example.product_management_system.User.User;
 import org.example.product_management_system.User.UserService;
 import org.example.product_management_system.utils.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,8 +56,11 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> getOrders() {
-        return ResponseHandler.response("Orders retrieved successfully", HttpStatus.OK, orderService.getOrders());
+    public ResponseEntity<Object> getOrders(@RequestParam(defaultValue = "0") int page,
+                                            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Order> orders = orderService.getOrders(pageable);
+        return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
     @GetMapping(path = "{orderId}")

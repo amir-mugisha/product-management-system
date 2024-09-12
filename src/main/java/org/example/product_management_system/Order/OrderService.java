@@ -1,6 +1,8 @@
 package org.example.product_management_system.Order;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,7 +36,8 @@ public class OrderService {
         return orderRepository.findByUserId(userId);
     }
 
-    public List<Order> getOrders() {
-        return orderRepository.findAll();
+
+    public Page<Order> getOrders(Pageable pageable) {
+        return orderRepository.findAll(pageable);
     }
 }

@@ -1,6 +1,8 @@
 package org.example.product_management_system.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,6 +25,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Cacheable(value = "users", key = "#userId")
     public List<User> getUsers() {
         return userRepository.findAll();
     }
@@ -33,6 +36,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Cacheable(value = "users", key = "#userId")
     public Optional<User> getUser(String userId){
         boolean exists = userRepository.existsById(userId);
         if(!exists){
@@ -42,6 +46,7 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
+    @CacheEvict(value = "users", key = "#userId")
     public void deleteUser(String userId) throws IllegalAccessException {
         boolean exists = userRepository.existsById(userId);
         if(!exists){
